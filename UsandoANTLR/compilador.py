@@ -48,7 +48,7 @@ def main():
     code_listener.get_code_output()
 
     c_file_name = "output.c"
-    output_executable_name = "input_c"  # Nome do executável gerado
+    output_executable_name = "output_c"  # Nome do executável gerado
 
     compile_c_code(c_file_name, output_executable_name)
 
