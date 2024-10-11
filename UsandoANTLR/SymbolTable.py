@@ -9,16 +9,14 @@ class Symbol:
 class SymbolTable:
     def __init__(self, parent=None):
         self.symbols = {}
-        self.parent = parent  # Parent scope for nested scopes
+        self.parent = parent  
 
     def define(self, name, symbol_type):
-        """Define a new symbol in the current scope."""
         if name in self.symbols:
             raise Exception(f"Error: Symbol {name} already defined in this scope.")
         self.symbols[name] = Symbol(name, symbol_type)
 
     def resolve(self, name):
-        """Resolve a symbol by looking up the current scope and parent scopes."""
         if name in self.symbols:
             return self.symbols[name]
         elif self.parent:
