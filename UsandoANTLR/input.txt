@@ -1,0 +1,9 @@
+function main(arg:integer):integer
+{
+	var cateto_1:integer;
+	var cateto_2:integer;
+	var hipotenusa_quadrado:integer;
+	cateto_1 = 3;
+	cateto_2 = 4;
+    hipotenusa_quadrado = cateto_1*cateto_1 + cateto_2*cateto_2;
+}
