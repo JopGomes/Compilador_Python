@@ -33,8 +33,7 @@ class CodeGeneratorListener(GrammarListener):
 
     def generateParams(self, ctx):
     # Geração de parâmetros da função (apenas um)
-    
-        while ctx.lp() is not None:
+        if ctx.lp() is not None:
             param_name = ctx.lp().idd().getText() 
             param_type = ctx.lp().t().getText() if ctx.lp().t() is not None else "unknown"  
             
