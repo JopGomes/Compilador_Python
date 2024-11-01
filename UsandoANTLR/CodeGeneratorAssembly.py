@@ -27,11 +27,16 @@ class CodeGeneratorAssembly(GrammarListener):
         self.add_line(f"sub esp, 4  ;")
 
     def enterS(self, ctx: GrammarParser.SContext):
-        if ctx.lv() is not None and ctx.e() is not None:
+        if ctx.getText().startswith("if"):
+            self.generateIf(ctx)
+        elif ctx.getText().startswith("while"):
+            self.generateWhile(ctx)
+        elif ctx.lv() is not None and ctx.e() is not None:
             var_name = ctx.lv().getText()
             expr = self.generateExpression(ctx.e())
             self.add_line(expr)  
             self.add_line(f"mov [ebp-{self.stack_pointer}], eax  ; ")
+        
 
     def generateParams(self, ctx):
         if ctx.lp() is not None:
