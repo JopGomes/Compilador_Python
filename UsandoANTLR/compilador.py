@@ -26,7 +26,7 @@ def compile_c_code(c_file_name, output_executable_name="a.out"):
 
 def main():
     # input_stream = FileStream(input("Enter the path to the source code file: "))
-    file_path = "input.txt"
+    file_path = "../UsandoANTLR/input.txt"
     with open(file_path, 'r') as file:
         input_stream = InputStream(file.read())
 

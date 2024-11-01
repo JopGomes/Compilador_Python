@@ -40,6 +40,40 @@ class CodeGeneratorAssembly(GrammarListener):
         else:
             print("No parameters found in function definition.")
             return ""
+    
+    def generateIf(self, ctx):
+        label_true = self.new_label()
+        label_end = self.new_label()
+
+        condition_code = self.generateExpression(ctx.e(0))  # Assume que a primeira expressão é a condição
+        self.add_line(condition_code)
+        self.add_line("cmp eax, 0  ;")
+        self.add_line(f"jne {label_true}  ; ")
+
+        # Bloco else (caso exista)
+        if ctx.getChildCount() > 2:  # Verifica se há um bloco else
+            self.generateStatement(ctx.getChild(2))
+        self.add_line(f"jmp {label_end}  ;")
+
+        self.add_line(f"{label_true}:")
+        # Bloco then (caso exista)
+        self.generateStatement(ctx.getChild(1))
+        self.add_line(f"{label_end}:")
+
+    def generateWhile(self, ctx):
+        label_start = self.new_label()
+        label_end = self.new_label()
+
+        self.add_line(f"{label_start}:")
+        condition_code = self.generateExpression(ctx.e(0))  # Assume que a primeira expressão é a condição
+        self.add_line(condition_code)
+        self.add_line("cmp eax, 0  ;")
+        self.add_line(f"je {label_end}  ;")
+
+        # Corpo do loop
+        self.generateStatement(ctx.getChild(1))  # Assume que o corpo do loop é o segundo filho
+        self.add_line(f"jmp {label_start}  ;")
+        self.add_line(f"{label_end}:")
 
     def generateExpression(self, ctx):
         if ctx.getChildCount() == 1:
